@@ -1,6 +1,5 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
-
 // Khởi tạo kết nối Sequelize
 const sequelize = new Sequelize(
     process.env.DB_NAME, 
@@ -9,18 +8,16 @@ const sequelize = new Sequelize(
     {
         host: process.env.DB_HOST,
         dialect: 'mysql',
-        logging: false, // Tắt log các câu lệnh SQL thuần cho gọn
+        logging: false, 
     }
 );
-
 // Kiểm tra kết nối
 const connectDB = async () => {
     try {
         await sequelize.authenticate();
-        console.log('✅ Kết nối MySQL thành công!');
+        console.log(' Kết nối MySQL thành công');
     } catch (error) {
-        console.error('❌ Lỗi kết nối MySQL:', error);
+        console.error('Lỗi kết nối MySQL:', error);
     }
 };
-
 module.exports = { sequelize, connectDB };
