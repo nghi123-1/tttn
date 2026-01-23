@@ -142,3 +142,4 @@ ADD COLUMN password VARCHAR(255) NOT NULL DEFAULT '';
 UPDATE shopdb.users
 SET password = CONCAT('pw_', user_id)
 WHERE user_id LIKE 'U%';
+--users, products, stats, recommendations, orders, order_items, cart_events, tracking_events, sessions thứ tự để ae đẩy dữ liệu dô mà ko bị xung đột nè.
