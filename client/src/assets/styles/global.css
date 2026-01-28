@@ -1,0 +1,36 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f7f7f7;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.btn {
+  background: #111;
+  color: white;
+  padding: 8px 14px;
+  display: inline-block;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.btn:hover {
+  background: #333;
+}
+
