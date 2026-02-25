@@ -136,10 +136,33 @@ ADD CONSTRAINT fk_recommendations_products
 FOREIGN KEY (product_id) REFERENCES products(product_id);
 
 -- Này là tôi bổ sung thêm trường password dô user nha ae
-USE shopdb;
 ALTER TABLE users
 ADD COLUMN password VARCHAR(255) NOT NULL DEFAULT '';
 UPDATE shopdb.users
 SET password = CONCAT('pw_', user_id)
 WHERE user_id LIKE 'U%';
 --users, products, stats, recommendations, orders, order_items, cart_events, tracking_events, sessions thứ tự để ae đẩy dữ liệu dô mà ko bị xung đột nè.
+
+UPDATE users
+SET email = CONCAT(LOWER(user_id), '@gmail.com')
+WHERE (email IS NULL OR email = '')
+AND user_id <> '';
+ALTER TABLE users
+MODIFY email VARCHAR(255) NOT NULL UNIQUE;
+
+SELECT user_id, password, email
+FROM users;
+ALTER TABLE tracking_events
+DROP COLUMN created_at;
+# Index theo thời gian (dashboard filter theo ngày)
+CREATE INDEX idx_tracking_timestamp
+ON tracking_events(timestamp);
+
+# Index theo loại sự kiện (click, view, scroll...)
+CREATE INDEX idx_tracking_event_type
+ON tracking_events(event_type);
+
+# Composite index cho sản phẩm + thời gian
+CREATE INDEX idx_tracking_product_time
+ON tracking_events(product_id, timestamp);
+
