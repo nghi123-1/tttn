@@ -11,7 +11,6 @@ const Tracking = sequelize.define(
     user_id: DataTypes.STRING,
     product_id: DataTypes.STRING,
     action: DataTypes.STRING,
-    created_at: DataTypes.DATE,
     event_type: DataTypes.STRING,
     x: DataTypes.INTEGER,
     y: DataTypes.INTEGER,

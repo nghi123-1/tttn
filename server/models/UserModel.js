@@ -8,10 +8,31 @@ const User = sequelize.define(
       type: DataTypes.STRING(10),
       primaryKey: true,
     },
-    gender: DataTypes.STRING,
-    age_group: DataTypes.STRING,
-    created_at: DataTypes.DATE,
-    password: DataTypes.STRING,
+
+    gender: {
+      type: DataTypes.STRING(10),
+    },
+
+    age_group: {
+      type: DataTypes.STRING(20),
+    },
+
+    created_at: {
+      type: DataTypes.DATE,
+    },
+
+    password: {
+      type: DataTypes.STRING(255),
+    },
+
+    email: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+      unique: true,
+      validate: {
+        isEmail: true, // check format email
+      },
+    },
   },
   {
     tableName: "users",

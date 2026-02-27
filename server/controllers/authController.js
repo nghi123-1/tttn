@@ -1,27 +1,34 @@
+const jwt = require("jsonwebtoken");
 const User = require("../models/UserModel");
 
-exports.getAllUsers = async (req, res) => {
-  try {
-    const users = await User.findAll();
-    res.json(users);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
+// LOGIN
 exports.login = async (req, res) => {
   try {
-    const { user_id, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.findOne({
-      where: { user_id, password },
-    });
+    const user = await User.findOne({ where: { email } });
 
-    if (!user) {
-      return res.status(401).json({ message: "Sai tài khoản hoặc mật khẩu" });
+    if (!user || user.password !== password) {
+      return res.status(401).json({
+        message: "Sai email hoặc mật khẩu",
+      });
     }
 
-    res.json(user);
+    const token = jwt.sign(
+      { user_id: user.user_id },
+      "secret_key",
+      { expiresIn: "1d" }
+    );
+
+    res.json({
+      message: "Đăng nhập thành công",
+      token,
+      user: {
+        user_id: user.user_id,
+        email: user.email,
+      },
+    });
+
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
